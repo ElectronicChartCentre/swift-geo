@@ -12,7 +12,7 @@ public struct DefaultBoundingBox: BoundingBox {
     public let minY: Double
     public let maxY: Double
     
-    static func create(_ coords: [Coordinate]) -> BoundingBox? {
+    public static func create(_ coords: [Coordinate]) -> BoundingBox? {
         if coords.isEmpty {
             return nil
         }
@@ -36,9 +36,13 @@ public struct DefaultBoundingBox: BoundingBox {
         return nil
     }
     
-    static func create(_ boundingBoxes: [BoundingBox]) -> BoundingBox? {
+    public static func create(_ boundingBoxes: [BoundingBox]) -> BoundingBox? {
         if boundingBoxes.isEmpty {
             return nil
+        }
+        
+        if boundingBoxes.count == 1 {
+            return boundingBoxes.first
         }
         
         var minX: Double? = nil
