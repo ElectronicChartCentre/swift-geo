@@ -12,6 +12,20 @@ public struct DefaultBoundingBox: BoundingBox {
     public let minY: Double
     public let maxY: Double
     
+    public init(minX: Double, maxX: Double, minY: Double, maxY: Double) {
+        self.minX = minX
+        self.maxX = maxX
+        self.minY = minY
+        self.maxY = maxY
+    }
+    
+    public func intersects(_ other: BoundingBox) -> Bool {
+        return !(other.minX > maxX ||
+                 other.maxX < minX ||
+                 other.minY > maxY ||
+                 other.maxY < minY)
+    }
+    
     public static func create(_ coords: [Coordinate]) -> BoundingBox? {
         if coords.isEmpty {
             return nil

@@ -17,7 +17,7 @@ public protocol GeometryCreator {
     
     func createMultiPoint(coords: [Coordinate]) -> Geometry
     
-    func createLineString(coords: [Coordinate]) -> Geometry
+    func createLineString(coords: [Coordinate]) -> LineString
     
     func createLinearRing(coords: [Coordinate]) -> LinearRing
     

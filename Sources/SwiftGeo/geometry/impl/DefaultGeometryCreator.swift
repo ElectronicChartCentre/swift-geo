@@ -31,8 +31,8 @@ public struct DefaultGeometryCreator: GeometryCreator {
         return DefaultGeometry(coords: coords)
     }
     
-    public func createLineString(coords: [any Coordinate]) -> any Geometry {
-        return DefaultGeometry(coords: coords)
+    public func createLineString(coords: [any Coordinate]) -> any LineString {
+        return DefaultLineString(coordinates: coords)
     }
     
     public func createLinearRing(coords: [any Coordinate]) -> any LinearRing {

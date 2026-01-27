@@ -15,4 +15,6 @@ public protocol BoundingBox {
     
     var maxY: Double { get }
     
+    func intersects(_ other: BoundingBox) -> Bool
+    
 }
