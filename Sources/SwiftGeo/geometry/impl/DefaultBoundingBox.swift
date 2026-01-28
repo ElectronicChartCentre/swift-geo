@@ -31,6 +31,10 @@ public struct DefaultBoundingBox: BoundingBox {
             return nil
         }
         
+        if coords.count == 1, let c = coords.first {
+            return DefaultBoundingBox(minX: c.x, maxX: c.x, minY: c.y, maxY: c.y)
+        }
+        
         var minX: Double? = nil
         var maxX: Double? = nil
         var minY: Double? = nil
