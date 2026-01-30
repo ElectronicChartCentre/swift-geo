@@ -7,26 +7,26 @@ import Foundation
 
 public struct DefaultMultiPoint: MultiPoint {
     
-    public let coordinates: [Coordinate]
+    private let _coordinates: [Coordinate]
     
-    public func numGeometries() -> Int {
-        return coordinates.count
+    public init(coordinates: [Coordinate]) {
+        _coordinates = coordinates
     }
     
-    public func geometry(_ idx: Int) -> Geometry {
-        return DefaultPoint(coordinate: coordinates[idx])
+    public func geometries() -> [Geometry] {
+        var geometries: [Geometry] = []
+        for coordinate in _coordinates {
+            geometries.append(DefaultPoint(coordinate: coordinate))
+        }
+        return geometries
     }
     
-    public func numCoordinates() -> Int {
-        return coordinates.count
-    }
-    
-    public func coordinate(_ idx: Int) -> Coordinate {
-        return coordinates[idx]
+    public func coordinates() -> [Coordinate] {
+        return _coordinates
     }
     
     public func isEmpty() -> Bool {
-        return coordinates.isEmpty
+        return _coordinates.isEmpty
     }
     
     public func isValid() -> Bool {
@@ -34,15 +34,15 @@ public struct DefaultMultiPoint: MultiPoint {
     }
     
     public func bbox() -> BoundingBox? {
-        return DefaultBoundingBox.create(coordinates)
+        return DefaultBoundingBox.create(_coordinates)
     }
     
     public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultMultiPoint {
         var newCoordinates: [Coordinate] = []
-        for coordinate in newCoordinates {
+        for coordinate in _coordinates {
             newCoordinates.append(transform(coordinate))
         }
-        return DefaultMultiPoint(coordinates: coordinates)
+        return DefaultMultiPoint(coordinates: newCoordinates)
     }
     
 }

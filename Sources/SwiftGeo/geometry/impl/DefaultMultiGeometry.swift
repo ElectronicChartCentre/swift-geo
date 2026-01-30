@@ -7,18 +7,18 @@ import Foundation
 
 public struct DefaultMultiGeometry: MultiGeometry {
     
-    public let geometries: [Geometry]
+    private let _geometries: [Geometry]
     
-    public func numGeometries() -> Int {
-        return geometries.count
+    public init(geometries: [Geometry]) {
+        _geometries = geometries
     }
-    
-    public func geometry(_ idx: Int) -> Geometry {
-        return geometries[idx]
+
+    public func geometries() -> [Geometry] {
+        _geometries
     }
     
     public func isEmpty() -> Bool {
-        for geometry in geometries {
+        for geometry in _geometries {
             if !geometry.isEmpty() {
                 return false
             }
@@ -27,7 +27,7 @@ public struct DefaultMultiGeometry: MultiGeometry {
     }
     
     public func isValid() -> Bool {
-        for geometry in geometries {
+        for geometry in _geometries {
             if !geometry.isValid() {
                 return false
             }
@@ -37,7 +37,7 @@ public struct DefaultMultiGeometry: MultiGeometry {
     
     public func bbox() -> BoundingBox? {
         var coords: [Coordinate] = []
-        for geometry in geometries {
+        for geometry in _geometries {
             if let bbox = geometry.bbox() {
                 coords.append(DefaultCoordinate2D(x: bbox.minX, y: bbox.minY))
                 coords.append(DefaultCoordinate2D(x: bbox.maxX, y: bbox.maxY))
@@ -48,7 +48,7 @@ public struct DefaultMultiGeometry: MultiGeometry {
     
     public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultMultiGeometry {
         var newGeometries: [Geometry] = []
-        for geometry in geometries {
+        for geometry in _geometries {
             newGeometries.append(geometry.transform(transform))
         }
         return DefaultMultiGeometry(geometries: newGeometries)
