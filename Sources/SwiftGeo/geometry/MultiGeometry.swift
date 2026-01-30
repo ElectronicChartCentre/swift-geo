@@ -7,6 +7,8 @@ import Foundation
 
 public protocol MultiGeometry: Geometry {
     
-    var geometries: [Geometry] { get }
+    func numGeometries() -> Int
+    
+    func geometry(_ idx: Int) -> Geometry
     
 }

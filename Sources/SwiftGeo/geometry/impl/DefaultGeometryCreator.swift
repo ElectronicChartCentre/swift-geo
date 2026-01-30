@@ -28,7 +28,7 @@ public struct DefaultGeometryCreator: GeometryCreator {
     }
     
     public func createMultiPoint(coords: [any Coordinate]) -> any Geometry {
-        return DefaultGeometry(coords: coords)
+        return DefaultMultiPoint(coordinates: coords)
     }
     
     public func createLineString(coords: [any Coordinate]) -> any LineString {

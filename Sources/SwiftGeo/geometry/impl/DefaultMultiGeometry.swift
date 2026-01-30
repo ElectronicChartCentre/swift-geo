@@ -9,6 +9,14 @@ public struct DefaultMultiGeometry: MultiGeometry {
     
     public let geometries: [Geometry]
     
+    public func numGeometries() -> Int {
+        return geometries.count
+    }
+    
+    public func geometry(_ idx: Int) -> Geometry {
+        return geometries[idx]
+    }
+    
     public func isEmpty() -> Bool {
         for geometry in geometries {
             if !geometry.isEmpty() {
