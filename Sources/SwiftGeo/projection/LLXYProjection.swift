@@ -25,7 +25,7 @@ public struct LLXYProjection: Projection {
     
     public func inverse(coordinate: Coordinate) -> Coordinate {
         let worldX = (coordinate.x / widthPixel) * (bbox.maxX - bbox.minX) + bbox.minX
-        let worldY = (coordinate.x / heightPixel) * (bbox.maxY - bbox.minY) + bbox.minY
+        let worldY = (coordinate.y / heightPixel) * (bbox.maxY - bbox.minY) + bbox.minY
         return coordinate.transform(newX: worldX, newY: worldY)
     }
     
