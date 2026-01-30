@@ -17,6 +17,14 @@ public struct DefaultMultiPoint: MultiPoint {
         return DefaultPoint(coordinate: coordinates[idx])
     }
     
+    public func numCoordinates() -> Int {
+        return coordinates.count
+    }
+    
+    public func coordinate(_ idx: Int) -> Coordinate {
+        return coordinates[idx]
+    }
+    
     public func isEmpty() -> Bool {
         return coordinates.isEmpty
     }
