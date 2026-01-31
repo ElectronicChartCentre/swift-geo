@@ -34,8 +34,10 @@ public struct DefaultBoundingBox: BoundingBox {
     }
     
     public func grow(factor: Double) -> BoundingBox {
-        let dx = (maxX - minX) * factor / 2.0
-        let dy = (maxY - minY) * factor / 2.0
+        let w = maxX - minX
+        let h = maxY - minY
+        let dx = ((factor * w) - w) / 2
+        let dy = ((factor * h) - h) / 2
         return DefaultBoundingBox(
             minX: minX - dx,
             maxX: maxX + dx,
