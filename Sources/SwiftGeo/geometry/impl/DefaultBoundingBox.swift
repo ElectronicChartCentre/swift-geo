@@ -19,11 +19,37 @@ public struct DefaultBoundingBox: BoundingBox {
         self.maxY = maxY
     }
     
+    public func intersects(_ other: Coordinate) -> Bool {
+        return !(other.x > maxX ||
+                 other.x < minX ||
+                 other.y > maxY ||
+                 other.y < minY)
+    }
+    
     public func intersects(_ other: BoundingBox) -> Bool {
         return !(other.minX > maxX ||
                  other.maxX < minX ||
                  other.minY > maxY ||
                  other.maxY < minY)
+    }
+    
+    public func grow(factor: Double) -> BoundingBox {
+        let dx = (maxX - minX) * factor / 2.0
+        let dy = (maxY - minY) * factor / 2.0
+        return DefaultBoundingBox(
+            minX: minX - dx,
+            maxX: maxX + dx,
+            minY: minY - dy,
+            maxY: maxY + dy
+        )
+    }
+    
+    public func transform(_ transform: (Coordinate) -> Coordinate) -> DefaultBoundingBox {
+        let min = DefaultCoordinate2D(x: minX, y: minY)
+        let max = DefaultCoordinate2D(x: maxX, y: maxY)
+        let newMin = transform(min)
+        let newMax = transform(max)
+        return DefaultBoundingBox(minX: newMin.x, maxX: newMax.x, minY: newMin.y, maxY: newMax.y)
     }
     
     public static func create(_ coords: [Coordinate]) -> BoundingBox? {

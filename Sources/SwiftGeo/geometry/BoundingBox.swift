@@ -15,6 +15,12 @@ public protocol BoundingBox {
     
     var maxY: Double { get }
     
+    func intersects(_ other: Coordinate) -> Bool
+
     func intersects(_ other: BoundingBox) -> Bool
+    
+    func grow(factor: Double) -> BoundingBox
+    
+    func transform(_ transform: (Coordinate) -> Coordinate) -> Self
     
 }
