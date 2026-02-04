@@ -15,4 +15,6 @@ public protocol Coordinate {
     
     func transform(newX: Double, newY: Double) -> Self
     
+    func distance2D(to other: Coordinate) -> Double
+    
 }

@@ -7,7 +7,11 @@ import Foundation
 
 public protocol GeometryCreator {
     
+    func createCoordinate2D(x: Double, y: Double) -> Coordinate
+    
     func createCoordinate2D(xcoo: Int, ycoo: Int, x: Double, y: Double) -> Coordinate
+    
+    func createCoordinate3D(x: Double, y: Double, z: Double) -> Coordinate
 
     func createCoordinate3D(xcoo: Int, ycoo: Int, zcoo: Int, x: Double, y: Double, z: Double) -> Coordinate
     

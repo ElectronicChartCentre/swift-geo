@@ -22,4 +22,8 @@ public struct DefaultCoordinate3D: Coordinate {
         return DefaultCoordinate3D(x: newX, y: newY, z: self.z)
     }
     
+    public func distance2D(to other: Coordinate) -> Double {
+        return sqrt(pow(x - other.x, 2.0) + pow(y - other.y, 2.0))
+    }
+    
 }
