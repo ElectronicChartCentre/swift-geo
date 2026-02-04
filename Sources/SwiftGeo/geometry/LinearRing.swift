@@ -5,8 +5,6 @@
 
 import Foundation
 
-public protocol LinearRing: Geometry {
-    
-    var coordinates: [Coordinate] { get }
+public protocol LinearRing: LinearGeometry {
     
 }

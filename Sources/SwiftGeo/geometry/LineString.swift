@@ -5,8 +5,6 @@
 
 import Foundation
 
-public protocol LineString: Geometry {
-    
-    var coordinates: [Coordinate] { get }
+public protocol LineString: LinearGeometry {
     
 }

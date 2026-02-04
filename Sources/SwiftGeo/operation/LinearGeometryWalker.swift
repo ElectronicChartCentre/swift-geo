@@ -5,25 +5,17 @@
 
 import Foundation
 
-public struct LineStringWalker {
+public struct LinearGeometryWalker {
     
     private let segments: [Segment]
     private let length: Double
     
-    public init(lineString: LineString) {
-        self.init(coordinates: lineString.coordinates)
-    }
-    
-    public init(linearRing: LinearRing) {
-        self.init(coordinates: linearRing.coordinates)
-    }
-    
-    private init(coordinates: [Coordinate]) {
+    public init(geometry: LinearGeometry) {
         var segments: [Segment] = []
         var length: Double = 0
         
         var prevCoordinate: Coordinate? = nil
-        for coordinate in coordinates {
+        for coordinate in geometry.coordinates {
             if let prevCoordinate = prevCoordinate {
                 let segment = Segment(c0: prevCoordinate, c1: coordinate)
                 segments.append(segment)
