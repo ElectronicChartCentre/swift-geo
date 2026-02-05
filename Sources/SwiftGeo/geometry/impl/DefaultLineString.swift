@@ -29,4 +29,23 @@ public struct DefaultLineString: LineString {
         return DefaultLineString(coordinates: newCoords)
     }
     
+    public func length() -> Double {
+        var length: Double = 0
+        var prevCoordinate: Coordinate? = nil
+        for coordinate in coordinates {
+            if let prevCoordinate = prevCoordinate {
+                length += prevCoordinate.distance2D(to: coordinate)
+            }
+            prevCoordinate = coordinate
+        }
+        return length
+    }
+    
+    public func coordinate(at index: Int) -> Coordinate? {
+        if index < 0 || index >= coordinates.count {
+            return nil
+        }
+        return coordinates[index]
+    }
+    
 }

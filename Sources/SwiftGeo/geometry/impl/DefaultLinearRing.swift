@@ -31,5 +31,21 @@ public struct DefaultLinearRing: LinearRing {
         }
         return DefaultLinearRing(coordinates: newCoords)
     }
+    
+    public func length() -> Double {
+        var length: Double = 0
+        var prevCoordinate: Coordinate? = nil
+        for coordinate in coordinates {
+            if let prevCoordinate = prevCoordinate {
+                length += prevCoordinate.distance2D(to: coordinate)
+            }
+            prevCoordinate = coordinate
+        }
+        return length
+    }
+    
+    public func coordinate(at index: Int) -> Coordinate? {
+        return coordinates[index % coordinates.count]
+    }
 
 }
