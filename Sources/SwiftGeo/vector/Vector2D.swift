@@ -50,6 +50,13 @@ public struct Vector2D {
         return Vector2D(x: x / length, y: y / length)
     }
     
+    public static func unit(from: Coordinate, to: Coordinate) -> Vector2D {
+        let length = from.distance2D(to: to)
+        let x = to.x - from.x
+        let y = to.y - from.y
+        return Vector2D(x: x / length, y: y / length)
+    }
+    
     public func scale(_ factor: Double) -> Vector2D {
         return Vector2D(x: x * factor, y: y * factor)
     }
