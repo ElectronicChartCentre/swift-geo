@@ -7,23 +7,23 @@ import Foundation
 
 public protocol GeometryCreator {
     
-    func createCoordinate2D(x: Double, y: Double) -> Coordinate
+    func createCoordinate2D(x: Double, y: Double) -> (any Coordinate)
     
-    func createCoordinate2D(xcoo: Int, ycoo: Int, x: Double, y: Double) -> Coordinate
+    func createCoordinate2D(xcoo: Int, ycoo: Int, x: Double, y: Double) -> (any Coordinate)
     
-    func createCoordinate3D(x: Double, y: Double, z: Double) -> Coordinate
+    func createCoordinate3D(x: Double, y: Double, z: Double) -> (any Coordinate)
 
-    func createCoordinate3D(xcoo: Int, ycoo: Int, zcoo: Int, x: Double, y: Double, z: Double) -> Coordinate
+    func createCoordinate3D(xcoo: Int, ycoo: Int, zcoo: Int, x: Double, y: Double, z: Double) -> (any Coordinate)
     
     func createEmptyGeometry() -> Geometry
     
-    func createPoint(coord: Coordinate) -> Point
+    func createPoint(coord: any Coordinate) -> Point
     
-    func createMultiPoint(coords: [Coordinate]) -> Geometry
+    func createMultiPoint(coords: [any Coordinate]) -> Geometry
     
-    func createLineString(coords: [Coordinate]) -> LineString
+    func createLineString(coords: [any Coordinate]) -> LineString
     
-    func createLinearRing(coords: [Coordinate]) -> LinearRing
+    func createLinearRing(coords: [any Coordinate]) -> LinearRing
     
     func createPolygon(shell: LinearRing, holes: [LinearRing]) -> Polygon
     

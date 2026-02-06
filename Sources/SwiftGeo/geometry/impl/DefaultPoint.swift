@@ -7,7 +7,7 @@ import Foundation
 
 public struct DefaultPoint: Point {
     
-    public let coordinate: Coordinate
+    public let coordinate: any Coordinate
     
     public func isEmpty() -> Bool {
         return false
@@ -21,7 +21,7 @@ public struct DefaultPoint: Point {
         return DefaultBoundingBox(minX: coordinate.x, maxX: coordinate.x, minY: coordinate.y, maxY: coordinate.y)
     }
     
-    public func transform(_ transform: (Coordinate) -> Coordinate) -> DefaultPoint {
+    public func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> DefaultPoint {
         return DefaultPoint(coordinate: transform(coordinate))
     }
     

@@ -11,7 +11,7 @@ public struct DefaultGeometryCreator: GeometryCreator {
         
     }
     
-    public func createCoordinate2D(x: Double, y: Double) -> Coordinate {
+    public func createCoordinate2D(x: Double, y: Double) -> any Coordinate {
         return DefaultCoordinate2D(x: x, y: y)
     }
     

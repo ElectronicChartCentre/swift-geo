@@ -10,7 +10,7 @@ public struct DefaultCoordinate2D: Coordinate {
     public let x: Double
     public let y: Double
 
-    public func isEqual(to other: Coordinate) -> Bool {
+    public func isEqual(to other: (any Coordinate)?) -> Bool {
         if let other = other as? DefaultCoordinate2D {
             return x == other.x && y == other.y
         }
@@ -21,7 +21,7 @@ public struct DefaultCoordinate2D: Coordinate {
         return DefaultCoordinate2D(x: newX, y: newY)
     }
     
-    public func distance2D(to other: Coordinate) -> Double {
+    public func distance2D(to other: (any Coordinate)) -> Double {
         return sqrt(pow(x - other.x, 2.0) + pow(y - other.y, 2.0))
     }
 

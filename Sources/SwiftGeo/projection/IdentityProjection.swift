@@ -11,11 +11,11 @@ public struct IdentityProjection: Projection {
         
     }
     
-    public func forward(coordinate: Coordinate) -> Coordinate {
+    public func forward(coordinate: any Coordinate) -> any Coordinate {
         return coordinate
     }
     
-    public func inverse(coordinate: Coordinate) -> Coordinate {
+    public func inverse(coordinate: any Coordinate) -> any Coordinate {
         return coordinate
     }
     

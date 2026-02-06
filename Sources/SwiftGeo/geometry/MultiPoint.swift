@@ -7,6 +7,6 @@ import Foundation
 
 public protocol MultiPoint: MultiGeometry {
     
-    func coordinates() -> [Coordinate]
+    func coordinates() -> [any Coordinate]
     
 }

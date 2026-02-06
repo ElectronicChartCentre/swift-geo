@@ -19,7 +19,7 @@ public struct DefaultBoundingBox: BoundingBox {
         self.maxY = maxY
     }
     
-    public func intersects(_ other: Coordinate) -> Bool {
+    public func intersects(_ other: any Coordinate) -> Bool {
         return !(other.x > maxX ||
                  other.x < minX ||
                  other.y > maxY ||
@@ -46,7 +46,7 @@ public struct DefaultBoundingBox: BoundingBox {
         )
     }
     
-    public func transform(_ transform: (Coordinate) -> Coordinate) -> DefaultBoundingBox {
+    public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultBoundingBox {
         let min = DefaultCoordinate2D(x: minX, y: minY)
         let max = DefaultCoordinate2D(x: maxX, y: maxY)
         let newMin = transform(min)
@@ -54,7 +54,7 @@ public struct DefaultBoundingBox: BoundingBox {
         return DefaultBoundingBox(minX: newMin.x, maxX: newMax.x, minY: newMin.y, maxY: newMax.y)
     }
     
-    public static func create(_ coords: [Coordinate]) -> BoundingBox? {
+    public static func create(_ coords: [any Coordinate]) -> BoundingBox? {
         if coords.isEmpty {
             return nil
         }

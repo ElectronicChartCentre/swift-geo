@@ -7,7 +7,7 @@ import Foundation
 
 public struct DefaultLinearRing: LinearRing {
     
-    public let coordinates: [Coordinate]
+    public let coordinates: [any Coordinate]
     
     public func isEmpty() -> Bool {
         return coordinates.isEmpty
@@ -24,8 +24,8 @@ public struct DefaultLinearRing: LinearRing {
         return DefaultBoundingBox.create(coordinates)
     }
     
-    public func transform(_ transform: (Coordinate) -> Coordinate) -> DefaultLinearRing {
-        var newCoords: [Coordinate] = []
+    public func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> DefaultLinearRing {
+        var newCoords: [any Coordinate] = []
         for coord in coordinates {
             newCoords.append(transform(coord))
         }
@@ -34,7 +34,7 @@ public struct DefaultLinearRing: LinearRing {
     
     public func length() -> Double {
         var length: Double = 0
-        var prevCoordinate: Coordinate? = nil
+        var prevCoordinate: (any Coordinate)? = nil
         for coordinate in coordinates {
             if let prevCoordinate = prevCoordinate {
                 length += prevCoordinate.distance2D(to: coordinate)
@@ -44,8 +44,37 @@ public struct DefaultLinearRing: LinearRing {
         return length
     }
     
-    public func coordinate(at index: Int) -> Coordinate? {
-        return coordinates[index % coordinates.count]
+    public func coordinate(index: Int, skip: Int) -> (any Coordinate)? {
+        
+        // treat duplicate coordinate at start/stop as just one coordinate
+        
+        // first at beginning of ring
+        if index >= 0, (index + skip) < 0 {
+            let newIndex = index + skip - 1 + coordinates.count
+            return coordinates[newIndex]
+        }
+        
+        // then at end of ring
+        if index < coordinates.count, (index + skip) >= coordinates.count {
+            let newIndex = index + skip + 1 - coordinates.count
+            return coordinates[newIndex]
+        }
+        
+        // normal
+        return coordinates[index + skip]
+    }
+
+    public func removeDuplicatePoints() -> DefaultLinearRing {
+        var newCoordinates: [any Coordinate] = []
+        var prevCoordinate: (any Coordinate)?
+        for coordinate in coordinates {
+            if let prevCoordinate = prevCoordinate, coordinate.isEqual(to: prevCoordinate) {
+                continue
+            }
+            newCoordinates.append(coordinate)
+            prevCoordinate = coordinate
+        }
+        return DefaultLinearRing(coordinates: newCoordinates)
     }
 
 }

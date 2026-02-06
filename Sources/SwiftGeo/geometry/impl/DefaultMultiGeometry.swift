@@ -36,7 +36,7 @@ public struct DefaultMultiGeometry: MultiGeometry {
     }
     
     public func bbox() -> BoundingBox? {
-        var coords: [Coordinate] = []
+        var coords: [any Coordinate] = []
         for geometry in _geometries {
             if let bbox = geometry.bbox() {
                 coords.append(DefaultCoordinate2D(x: bbox.minX, y: bbox.minY))

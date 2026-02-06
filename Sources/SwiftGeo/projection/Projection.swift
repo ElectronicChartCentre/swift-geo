@@ -10,12 +10,12 @@ public protocol Projection {
     /**
      * project from world x y to screen x y
      */
-    func forward(coordinate: Coordinate) -> Coordinate
+    func forward(coordinate: any Coordinate) -> any Coordinate
     
     /**
      * project from screen x y to world x y
      */
-    func inverse(coordinate: Coordinate) -> Coordinate
+    func inverse(coordinate: any Coordinate) -> any Coordinate
     
     /**
      * project from world x y to screen x y

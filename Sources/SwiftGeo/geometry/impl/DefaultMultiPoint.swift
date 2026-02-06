@@ -7,9 +7,9 @@ import Foundation
 
 public struct DefaultMultiPoint: MultiPoint {
     
-    private let _coordinates: [Coordinate]
+    private let _coordinates: [any Coordinate]
     
-    public init(coordinates: [Coordinate]) {
+    public init(coordinates: [any Coordinate]) {
         _coordinates = coordinates
     }
     
@@ -21,7 +21,7 @@ public struct DefaultMultiPoint: MultiPoint {
         return geometries
     }
     
-    public func coordinates() -> [Coordinate] {
+    public func coordinates() -> [any Coordinate] {
         return _coordinates
     }
     
@@ -38,7 +38,7 @@ public struct DefaultMultiPoint: MultiPoint {
     }
     
     public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultMultiPoint {
-        var newCoordinates: [Coordinate] = []
+        var newCoordinates: [any Coordinate] = []
         for coordinate in _coordinates {
             newCoordinates.append(transform(coordinate))
         }

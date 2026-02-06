@@ -26,7 +26,7 @@ public struct DefaultPolygon: Polygon {
         return shell.bbox()
     }
     
-    public func transform(_ transform: (Coordinate) -> Coordinate) -> DefaultPolygon {
+    public func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> DefaultPolygon {
         let newShell = shell.transform(transform)
         var newHoles: [LinearRing] = []
         for hole in newHoles {

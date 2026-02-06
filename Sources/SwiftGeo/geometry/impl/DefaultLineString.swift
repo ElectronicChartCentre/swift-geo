@@ -7,7 +7,7 @@ import Foundation
 
 public struct DefaultLineString: LineString {
     
-    public let coordinates: [Coordinate]
+    public let coordinates: [any Coordinate]
     
     public func isEmpty() -> Bool {
         return coordinates.isEmpty
@@ -21,7 +21,7 @@ public struct DefaultLineString: LineString {
         return DefaultBoundingBox.create(coordinates)
     }
     
-    public func transform(_ transform: (Coordinate) -> Coordinate) -> DefaultLineString {
+    public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultLineString {
         var newCoords: [Coordinate] = []
         for coord in coordinates {
             newCoords.append(transform(coord))
@@ -31,7 +31,7 @@ public struct DefaultLineString: LineString {
     
     public func length() -> Double {
         var length: Double = 0
-        var prevCoordinate: Coordinate? = nil
+        var prevCoordinate: (any Coordinate)? = nil
         for coordinate in coordinates {
             if let prevCoordinate = prevCoordinate {
                 length += prevCoordinate.distance2D(to: coordinate)
@@ -41,11 +41,25 @@ public struct DefaultLineString: LineString {
         return length
     }
     
-    public func coordinate(at index: Int) -> Coordinate? {
-        if index < 0 || index >= coordinates.count {
+    public func coordinate(index: Int, skip: Int) -> (any Coordinate)? {
+        let newIndex = index + skip
+        if newIndex < 0 || newIndex >= coordinates.count {
             return nil
         }
-        return coordinates[index]
+        return coordinates[newIndex]
+    }
+    
+    public func removeDuplicatePoints() -> DefaultLineString {
+        var newCoordinates: [any Coordinate] = []
+        var prevCoordinate: (any Coordinate)?
+        for coordinate in coordinates {
+            if let prevCoordinate = prevCoordinate, coordinate.isEqual(to: prevCoordinate) {
+                continue
+            }
+            newCoordinates.append(coordinate)
+            prevCoordinate = coordinate
+        }
+        return DefaultLineString(coordinates: newCoordinates)
     }
     
 }

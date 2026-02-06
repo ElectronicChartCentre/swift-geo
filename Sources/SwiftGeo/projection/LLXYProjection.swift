@@ -17,13 +17,13 @@ public struct LLXYProjection: Projection {
         self.heightPixel = Double(heightPoint * pixelsPrPoint)
     }
 
-    public func forward(coordinate: Coordinate) -> Coordinate {
+    public func forward(coordinate: any Coordinate) -> any Coordinate {
         let screenX = ((coordinate.x - bbox.minX) / (bbox.maxX - bbox.minX)) * Double(widthPixel)
         let screenY = ((coordinate.y - bbox.minY) / (bbox.maxY - bbox.minY)) * Double(heightPixel)
         return coordinate.transform(newX: screenX, newY: screenY)
     }
     
-    public func inverse(coordinate: Coordinate) -> Coordinate {
+    public func inverse(coordinate: any Coordinate) -> any Coordinate {
         let worldX = (coordinate.x / widthPixel) * (bbox.maxX - bbox.minX) + bbox.minX
         let worldY = (coordinate.y / heightPixel) * (bbox.maxY - bbox.minY) + bbox.minY
         return coordinate.transform(newX: worldX, newY: worldY)

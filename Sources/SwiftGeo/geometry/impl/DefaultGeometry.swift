@@ -7,7 +7,7 @@ import Foundation
 
 public struct DefaultGeometry: Geometry {
     
-    public let coords: [Coordinate]
+    public let coords: [any Coordinate]
     
     public func isEmpty() -> Bool {
         return coords.isEmpty
@@ -21,8 +21,8 @@ public struct DefaultGeometry: Geometry {
         return DefaultBoundingBox.create(coords)
     }
     
-    public func transform(_ transform: (Coordinate) -> Coordinate) -> DefaultGeometry {
-        var newCoords: [Coordinate] = []
+    public func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> DefaultGeometry {
+        var newCoords: [any Coordinate] = []
         for coord in coords {
             newCoords.append(transform(coord))
         }

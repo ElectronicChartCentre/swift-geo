@@ -11,7 +11,7 @@ public struct CenterFinder {
         
     }
     
-    public static func centerCoordinate2D(geometry: Geometry, creator: GeometryCreator) -> Coordinate? {
+    public static func centerCoordinate2D(geometry: Geometry, creator: GeometryCreator) -> (any Coordinate)? {
         if geometry.isEmpty() {
             return nil
         }
@@ -31,8 +31,8 @@ public struct CenterFinder {
         
         // TODO: need to do this in a much smarter way
         if let polygon = geometry as? Polygon {
-            var prevCoordinate: Coordinate? = nil
-            for (index, coordinate) in polygon.shell.coordinates.enumerated() {
+            var prevCoordinate: (any Coordinate)? = nil
+            for coordinate in polygon.shell.coordinates {
                 if let prevCoordinate = prevCoordinate {
                     let length = coordinate.distance2D(to: prevCoordinate)
                     n += length

@@ -14,7 +14,7 @@ public struct LinearGeometryWalker {
         var segments: [Segment] = []
         var length: Double = 0
         
-        var prevCoordinate: Coordinate? = nil
+        var prevCoordinate: (any Coordinate)? = nil
         for coordinate in geometry.coordinates {
             if let prevCoordinate = prevCoordinate {
                 let segment = Segment(c0: prevCoordinate, c1: coordinate)
@@ -28,7 +28,7 @@ public struct LinearGeometryWalker {
         self.length = length
     }
     
-    public func coordinate2DAtFactor(factor: Double, creator: GeometryCreator) -> Coordinate? {
+    public func coordinate2DAtFactor(factor: Double, creator: GeometryCreator) -> (any Coordinate)? {
         if factor < 0 {
             return nil
         }
@@ -52,7 +52,6 @@ public struct LinearGeometryWalker {
                     return creator.createCoordinate2D(x: segment.c0.x, y: y)
                 }
                 
-                let steepFactor = segment.steepFactor()
                 let x = segment.c0.x + remainingDistanceFactor * segment.dx()
                 let y = segment.c0.y + remainingDistanceFactor * segment.dy()
                 return creator.createCoordinate2D(x: x, y: y)
@@ -66,11 +65,11 @@ public struct LinearGeometryWalker {
     
     private struct Segment {
         
-        let c0: Coordinate
-        let c1: Coordinate
+        let c0: any Coordinate
+        let c1: any Coordinate
         let length: Double
         
-        init(c0: Coordinate, c1: Coordinate) {
+        init(c0: any Coordinate, c1: any Coordinate) {
             self.c0 = c0
             self.c1 = c1
             self.length = c0.distance2D(to: c1)
