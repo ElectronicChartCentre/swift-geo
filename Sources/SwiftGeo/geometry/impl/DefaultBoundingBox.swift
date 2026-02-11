@@ -26,6 +26,13 @@ public struct DefaultBoundingBox: BoundingBox {
                  other.y < minY)
     }
     
+    public func intersects(x: Double, y: Double) -> Bool {
+        return !(x > maxX ||
+                 x < minX ||
+                 y > maxY ||
+                 y < minY)
+    }
+    
     public func intersects(_ other: BoundingBox) -> Bool {
         return !(other.minX > maxX ||
                  other.maxX < minX ||
