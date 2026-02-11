@@ -22,7 +22,7 @@ public struct DefaultLineString: LineString {
     }
     
     public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultLineString {
-        var newCoords: [Coordinate] = []
+        var newCoords: [any Coordinate] = []
         for coord in coordinates {
             newCoords.append(transform(coord))
         }

@@ -2,8 +2,6 @@
 //  Test.swift
 //  swift-geo
 //
-//  Created by Tore Halset on 31/01/2026.
-//
 
 import Testing
 @testable import SwiftGeo

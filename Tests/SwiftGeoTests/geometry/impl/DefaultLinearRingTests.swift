@@ -2,8 +2,6 @@
 //  Test.swift
 //  swift-geo
 //
-//  Created by Tore Halset on 06/02/2026.
-//
 
 import Testing
 
