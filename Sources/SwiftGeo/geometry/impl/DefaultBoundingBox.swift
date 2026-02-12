@@ -53,6 +53,15 @@ public struct DefaultBoundingBox: BoundingBox {
         )
     }
     
+    public func grow(deltaX: Double, deltaY: Double) -> BoundingBox {
+        return DefaultBoundingBox(
+            minX: minX - deltaX,
+            maxX: maxX + deltaX,
+            minY: minY - deltaY,
+            maxY: maxY + deltaY
+        )
+    }
+    
     public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultBoundingBox {
         let min = DefaultCoordinate2D(x: minX, y: minY)
         let max = DefaultCoordinate2D(x: maxX, y: maxY)

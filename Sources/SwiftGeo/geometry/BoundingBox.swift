@@ -23,6 +23,8 @@ public protocol BoundingBox {
     
     func grow(factor: Double) -> BoundingBox
     
+    func grow(deltaX: Double, deltaY: Double) -> BoundingBox
+    
     func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> Self
     
 }
