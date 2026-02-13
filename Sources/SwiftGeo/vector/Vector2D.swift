@@ -25,8 +25,15 @@ public struct Vector2D {
         self.y = to.y - from.y
     }
     
+    /**
+     * return counter clockwise direction of vector from positive x axis in radians. right is 0, up is .pi/2
+     */
     public func direction() -> Double {
         return atan2(y, x)
+    }
+    
+    public func angle() -> Angle {
+        return Angle(radiansCCWPositiveX: direction())
     }
     
     public func length() -> Double {
@@ -65,6 +72,10 @@ public struct Vector2D {
     
     public func scale(_ factor: Double) -> Vector2D {
         return Vector2D(x: x * factor, y: y * factor)
+    }
+    
+    public func dot(_ other: Vector2D) -> Double {
+        return x * other.x + y * other.y
     }
 
 }
