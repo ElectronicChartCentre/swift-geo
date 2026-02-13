@@ -15,15 +15,7 @@ public struct DefaultGeometryCreator: GeometryCreator {
         return DefaultCoordinate2D(x: x, y: y)
     }
     
-    public func createCoordinate2D(xcoo: Int, ycoo: Int, x: Double, y: Double) -> any Coordinate {
-        return DefaultCoordinate2D(x: x, y: y)
-    }
-    
     public func createCoordinate3D(x: Double, y: Double, z: Double) -> any Coordinate {
-        return DefaultCoordinate3D(x: x, y: y, z: z)
-    }
-    
-    public func createCoordinate3D(xcoo: Int, ycoo: Int, zcoo: Int, x: Double, y: Double, z: Double) -> any Coordinate {
         return DefaultCoordinate3D(x: x, y: y, z: z)
     }
     
