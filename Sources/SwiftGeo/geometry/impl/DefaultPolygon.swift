@@ -29,7 +29,7 @@ public struct DefaultPolygon: Polygon {
     public func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> DefaultPolygon {
         let newShell = shell.transform(transform)
         var newHoles: [LinearRing] = []
-        for hole in newHoles {
+        for hole in holes {
             newHoles.append(hole.transform(transform))
         }
         return DefaultPolygon(shell: newShell, holes: newHoles)
