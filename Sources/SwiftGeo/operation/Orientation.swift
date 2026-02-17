@@ -10,35 +10,33 @@ public struct Orientation {
     public enum OrientationDirection {
         case CW
         case CCW
+        case Unknown
     }
 
     public static func direction(ring: LinearRing) -> OrientationDirection {
-        var sumDeltaOrientation: Double = 0.0
-        
-        var prevDirection: Double?
-        for i in 0..<ring.coordinates.count - 1 {
-            let p1 = ring.coordinates[i]
-            let p2 = ring.coordinates[i + 1]
-            
-            let x = p2.x - p1.x
-            let y = p2.y - p1.y
-            
-            if x == 0, y == 0 {
-                continue
-            }
-            
-            let direction = atan2(y, x)
-            
-            if let prevDirection {
-                let deltaDirection = direction - prevDirection
-                sumDeltaOrientation += deltaDirection
-            }
-            
-            prevDirection = direction
-            
+        // Accepts open or closed rings (first may or may not equal last)
+        guard ring.coordinates.count >= 3 else { return .Unknown }
+
+        let n: Int
+        if ring.coordinates.count >= 2, ring.coordinates.first!.x == ring.coordinates.last!.x, ring.coordinates.first!.y == ring.coordinates.last!.y {
+            n = ring.coordinates.count - 1
+        } else {
+            n = ring.coordinates.count
         }
-        
-        return sumDeltaOrientation < 0 ? .CCW : .CW
+        guard n >= 3 else { return .Unknown }
+
+        // Shoelace: signedArea = 0.5 * Σ(x_i*y_{i+1} - x_{i+1}*y_i)
+        // For y-up coordinates: signedArea > 0 => counter-clockwise, < 0 => clockwise
+        var area2 = 0.0
+        for i in 0..<n {
+            let j = (i + 1) % n
+            area2 += ring.coordinates[i].x * ring.coordinates[j].y - ring.coordinates[j].x * ring.coordinates[i].y
+        }
+
+        let epsilon: Double = 1e-10
+        if area2 > epsilon { return .CCW }
+        if area2 < -epsilon { return .CW }
+        return .Unknown
     }
     
     public static func ensureDirection(ring: LinearRing, direction: OrientationDirection, creator: GeometryCreator) -> LinearRing {
