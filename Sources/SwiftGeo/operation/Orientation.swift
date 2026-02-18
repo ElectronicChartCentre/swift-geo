@@ -14,29 +14,31 @@ public struct Orientation {
     }
 
     public static func direction(ring: LinearRing) -> OrientationDirection {
-        // Accepts open or closed rings (first may or may not equal last)
-        guard ring.coordinates.count >= 3 else { return .Unknown }
-
-        let n: Int
-        if ring.coordinates.count >= 2, ring.coordinates.first!.x == ring.coordinates.last!.x, ring.coordinates.first!.y == ring.coordinates.last!.y {
-            n = ring.coordinates.count - 1
-        } else {
-            n = ring.coordinates.count
-        }
-        guard n >= 3 else { return .Unknown }
-
-        // Shoelace: signedArea = 0.5 * Σ(x_i*y_{i+1} - x_{i+1}*y_i)
-        // For y-up coordinates: signedArea > 0 => counter-clockwise, < 0 => clockwise
-        var area2 = 0.0
-        for i in 0..<n {
-            let j = (i + 1) % n
-            area2 += ring.coordinates[i].x * ring.coordinates[j].y - ring.coordinates[j].x * ring.coordinates[i].y
-        }
-
-        let epsilon: Double = 1e-10
-        if area2 > epsilon { return .CCW }
-        if area2 < -epsilon { return .CW }
+        let area = shoelaceArea(ring: ring)
+        let epsilon: Double = 1e-20
+        if area > epsilon { return .CW }
+        if area < -epsilon { return .CCW }
         return .Unknown
+    }
+    
+    private static func shoelaceArea(ring: LinearRing) -> Double {
+        // http://en.wikipedia.org/wiki/Shoelace_formula
+        
+        if ring.coordinates.count < 3 {
+            return 0
+        }
+        
+        var sum: Double = 0
+        
+        let x0 = ring.coordinates[0].x
+        for i in 1..<ring.coordinates.count - 1 {
+            let x = ring.coordinates[i].x - x0
+            let y1 = ring.coordinates[i + 1].y
+            let y2 = ring.coordinates[i - 1].y
+            sum += x * (y2 - y1)
+        }
+        
+        return sum / 2.0
     }
     
     public static func ensureDirection(ring: LinearRing, direction: OrientationDirection, creator: GeometryCreator) -> LinearRing {

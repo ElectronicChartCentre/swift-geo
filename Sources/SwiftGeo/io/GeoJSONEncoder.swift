@@ -7,31 +7,16 @@ import Foundation
 
 public struct GeoJSONEncoder {
     
-    public static func encode(_ features: [Feature]) -> Data {
-        do {
-            return try JSONSerialization.data(withJSONObject: toDictionary(features))
-        } catch {
-            print("ERROR: could not GeoJSON encode features. \(error)")
-            return Data()
-        }
+    public static func encode(_ features: [Feature]) throws -> Data {
+        return try JSONSerialization.data(withJSONObject: toDictionary(features))
     }
     
-    public static func encode(_ feature: Feature) -> Data {
-        do {
-            return try JSONSerialization.data(withJSONObject: toDictionary(feature))
-        } catch {
-            print("ERROR: could not GeoJSON encode feature. \(error)")
-            return Data()
-        }
+    public static func encode(_ feature: Feature) throws -> Data {
+        return try JSONSerialization.data(withJSONObject: toDictionary(feature))
     }
     
-    public static func encode(_ geometry: Geometry) -> Data {
-        do {
-            return try JSONSerialization.data(withJSONObject: toDictionary(geometry))
-        } catch {
-            print("ERROR: could not GeoJSON encode geometry. \(error)")
-            return Data()
-        }
+    public static func encode(_ geometry: Geometry) throws -> Data {
+        return try JSONSerialization.data(withJSONObject: toDictionary(geometry))
     }
     
     private static func toDictionary(_ features: [Feature]) -> [String: Any] {
@@ -60,7 +45,8 @@ public struct GeoJSONEncoder {
             return ["type": "LineString", "coordinates": toArray(lineString.coordinates)]
         }
         if let linearRing = geometry as? LinearRing {
-            return ["type": "LinearRing", "coordinates": toArray(linearRing.coordinates)]
+            // yes, LinearRing is LineString in GeoJSON
+            return ["type": "LineString", "coordinates": toArray(linearRing.coordinates)]
         }
         if let multiPoint = geometry as? MultiPoint {
             return ["type": "MultiPoint", "coordinates": toArray(multiPoint.coordinates())]
