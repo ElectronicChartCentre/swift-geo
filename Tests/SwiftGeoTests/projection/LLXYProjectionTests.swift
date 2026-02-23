@@ -31,6 +31,16 @@ struct LLXYProjectionTests {
         #expect(ursCalculated.y == urs.y)
         #expect(urwCalculated.x == urw.x)
         #expect(urwCalculated.y == urw.y)
+        
+        let lrw = DefaultCoordinate2D(x: 20, y: 30)
+        let lrs = DefaultCoordinate2D(x: 100, y: 0)
+        let lrsCalculated = proj.forward(coordinate: lrw)
+        let lrwCalculated = proj.inverse(coordinate: lrs)
+
+        #expect(lrsCalculated.x == lrs.x)
+        #expect(lrsCalculated.y == lrs.y)
+        #expect(lrwCalculated.x == lrw.x)
+        #expect(lrwCalculated.y == lrw.y)
     }
 
 }

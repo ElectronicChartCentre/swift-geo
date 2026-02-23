@@ -5,6 +5,9 @@
 
 import Foundation
 
+/**
+ * A projection from world lon(x) lat(y) to screen/tile x y. Screen x y origo is in lower left to match that of Core Graphics.
+ */
 public protocol Projection {
     
     /**
