@@ -19,7 +19,11 @@ public protocol GeometryCreator {
     
     func createLineString(coords: [any Coordinate]) -> LineString
     
+    func createLineString(coords: [any Coordinate], ref: (any Hashable)?) -> LineString
+    
     func createLinearRing(coords: [any Coordinate]) -> LinearRing
+    
+    func createLinearRing(coords: [any Coordinate], ref: (any Hashable)?) -> LinearRing
     
     func createPolygon(shell: LinearRing, holes: [LinearRing]) -> Polygon
     

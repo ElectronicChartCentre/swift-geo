@@ -8,6 +8,7 @@ import Foundation
 public struct DefaultLineString: LineString {
     
     public let coordinates: [any Coordinate]
+    public let ref: (any Hashable)?
     
     public func isEmpty() -> Bool {
         return coordinates.isEmpty
@@ -26,7 +27,7 @@ public struct DefaultLineString: LineString {
         for coord in coordinates {
             newCoords.append(transform(coord))
         }
-        return DefaultLineString(coordinates: newCoords)
+        return DefaultLineString(coordinates: newCoords, ref: ref)
     }
     
     public func length() -> Double {
@@ -59,7 +60,14 @@ public struct DefaultLineString: LineString {
             newCoordinates.append(coordinate)
             prevCoordinate = coordinate
         }
-        return DefaultLineString(coordinates: newCoordinates)
+        return DefaultLineString(coordinates: newCoordinates, ref: ref)
+    }
+    
+    public func refs() -> [any Hashable] {
+        if let ref = ref {
+            return [ref]
+        }
+        return []
     }
     
 }

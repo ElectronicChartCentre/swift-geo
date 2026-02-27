@@ -29,4 +29,8 @@ public struct DefaultGeometry: Geometry {
         return DefaultGeometry(coords: newCoords)
     }
     
+    public func refs() -> [any Hashable] {
+        return []
+    }
+    
 }

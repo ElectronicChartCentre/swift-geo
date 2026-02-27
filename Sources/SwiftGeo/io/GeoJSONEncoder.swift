@@ -59,6 +59,13 @@ public struct GeoJSONEncoder {
             }
             return ["type": "Polygon", "coordinates": toArray(coordss)]
         }
+        if let multiGeometry = geometry as? MultiGeometry {
+            var geometries = [[String: Any]]()
+            for geometry in multiGeometry.geometries() {
+                geometries.append(toDictionary(geometry))
+            }
+            return ["type": "GeometryCollection", "geometries": geometries]
+        }
         print("ERROR: unsupported geometry type in GeoJSONEncoder: \(type(of: geometry))")
         
         return [:]

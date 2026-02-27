@@ -15,4 +15,6 @@ public protocol Geometry {
     
     func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> Self
     
+    func refs() -> [any Hashable]
+    
 }

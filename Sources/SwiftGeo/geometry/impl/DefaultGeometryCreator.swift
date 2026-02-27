@@ -32,11 +32,19 @@ public struct DefaultGeometryCreator: GeometryCreator {
     }
     
     public func createLineString(coords: [any Coordinate]) -> any LineString {
-        return DefaultLineString(coordinates: coords)
+        return DefaultLineString(coordinates: coords, ref: nil)
+    }
+    
+    public func createLineString(coords: [any Coordinate], ref: (any Hashable)?) -> any LineString {
+        return DefaultLineString(coordinates: coords, ref: ref)
     }
     
     public func createLinearRing(coords: [any Coordinate]) -> any LinearRing {
-        return DefaultLinearRing(coordinates: coords)
+        return DefaultLinearRing(coordinates: coords, ref: nil)
+    }
+    
+    public func createLinearRing(coords: [any Coordinate], ref: (any Hashable)?) -> any LinearRing {
+        return DefaultLinearRing(coordinates: coords, ref: ref)
     }
     
     public func createPolygon(shell: any LinearRing, holes: [any LinearRing]) -> any Polygon {

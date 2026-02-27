@@ -8,6 +8,7 @@ import Foundation
 public struct DefaultLinearRing: LinearRing {
     
     public let coordinates: [any Coordinate]
+    public let ref: (any Hashable)?
     
     public func isEmpty() -> Bool {
         return coordinates.isEmpty
@@ -29,7 +30,7 @@ public struct DefaultLinearRing: LinearRing {
         for coord in coordinates {
             newCoords.append(transform(coord))
         }
-        return DefaultLinearRing(coordinates: newCoords)
+        return DefaultLinearRing(coordinates: newCoords, ref: ref)
     }
     
     public func length() -> Double {
@@ -74,7 +75,14 @@ public struct DefaultLinearRing: LinearRing {
             newCoordinates.append(coordinate)
             prevCoordinate = coordinate
         }
-        return DefaultLinearRing(coordinates: newCoordinates)
+        return DefaultLinearRing(coordinates: newCoordinates, ref: ref)
+    }
+    
+    public func refs() -> [any Hashable] {
+        if let ref = ref {
+            return [ref]
+        }
+        return []
     }
 
 }

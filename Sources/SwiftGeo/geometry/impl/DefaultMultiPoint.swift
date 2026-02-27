@@ -45,4 +45,8 @@ public struct DefaultMultiPoint: MultiPoint {
         return DefaultMultiPoint(coordinates: newCoordinates)
     }
     
+    public func refs() -> [any Hashable] {
+        return []
+    }
+    
 }

@@ -54,4 +54,12 @@ public struct DefaultMultiGeometry: MultiGeometry {
         return DefaultMultiGeometry(geometries: newGeometries)
     }
     
+    public func refs() -> [any Hashable] {
+        var refs: [any Hashable] = []
+        for geometry in _geometries {
+            refs.append(contentsOf: geometry.refs())
+        }
+        return refs
+    }
+    
 }

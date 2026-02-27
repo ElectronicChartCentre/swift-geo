@@ -25,4 +25,8 @@ public struct DefaultPoint: Point {
         return DefaultPoint(coordinate: transform(coordinate))
     }
     
+    public func refs() -> [any Hashable] {
+        return []
+    }
+    
 }
