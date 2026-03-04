@@ -8,7 +8,7 @@ import Foundation
 /**
  * EPSG:3857 with XYZ tiling.
  */
-public struct WebMercator: Projection {
+public struct WebMercatorTile: Projection {
     
     private static let radius: Double = 6378137.0
     private static let startResolution: Double = 156543.0339
@@ -20,10 +20,10 @@ public struct WebMercator: Projection {
     private let widthPixel: Int
     private let heightPixel: Int
 
-    private let x: Int
-    private let y: Int
-    private let z: Int
-    private let pixelRatio: Int
+    public let x: Int
+    public let y: Int
+    public let z: Int
+    public let pixelRatio: Int
     
     private let mapUnitsPrPoint: Double
     private let mapUnitsPrPixel: Double
@@ -43,14 +43,14 @@ public struct WebMercator: Projection {
         self.widthPixel = widthPoint * pixelRatio
         self.heightPixel = heightPoint * pixelRatio
         
-        self.mapUnitsPrPoint = WebMercator.startResolution * pow(0.5, Double(z));
+        self.mapUnitsPrPoint = WebMercatorTile.startResolution * pow(0.5, Double(z));
         self.mapUnitsPrPixel = mapUnitsPrPoint / Double(pixelRatio)
         
         self.tileWidthInMapUnits = mapUnitsPrPixel * Double(widthPixel)
         self.tileHeightInMapUnits = mapUnitsPrPixel * Double(heightPixel)
         
-        self.minX = WebMercator.left + (Double(x) * tileWidthInMapUnits)
-        self.minY = WebMercator.top - (Double(y) * tileHeightInMapUnits)
+        self.minX = WebMercatorTile.left + (Double(x) * tileWidthInMapUnits)
+        self.minY = WebMercatorTile.top - (Double(y) * tileHeightInMapUnits)
     }
 
     public func forward(coordinate: any Coordinate) -> any Coordinate {
@@ -59,8 +59,8 @@ public struct WebMercator: Projection {
         let lonRad = coordinate.x * .pi / 180.0
         
         // http://wiki.openstreetmap.org/wiki/Mercator
-        let mapY = log(tan(latRad / 2.0 + .pi / 4.0)) * WebMercator.radius
-        let mapX = lonRad * WebMercator.radius
+        let mapY = log(tan(latRad / 2.0 + .pi / 4.0)) * WebMercatorTile.radius
+        let mapX = lonRad * WebMercatorTile.radius
 
         let pixelX = (mapX - minX) / mapUnitsPrPixel
         let pixelY = Double(heightPixel) - 1.0 - ((mapY - minY) / -mapUnitsPrPixel)

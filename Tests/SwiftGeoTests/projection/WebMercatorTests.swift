@@ -10,7 +10,7 @@ import Testing
 struct WebMercatorTests {
 
     @Test func testWebMercator() async throws {
-        let p = WebMercator(x: 69725, y: 38627, z: 17, pixelRatio: 1)
+        let p = WebMercatorTile(x: 69725, y: 38627, z: 17, pixelRatio: 1)
         let c = DefaultGeometryCreator()
         let t = 0.00001
         
