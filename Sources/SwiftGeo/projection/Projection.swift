@@ -10,6 +10,9 @@ import Foundation
  */
 public protocol Projection {
     
+    var widthPixel: Double { get }
+    var heightPixel: Double { get }
+    
     /**
      * project from world x y to screen x y
      */

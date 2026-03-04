@@ -17,8 +17,8 @@ public struct WebMercatorTile: Projection {
     
     private let widthPoint = 256
     private let heightPoint = 256
-    private let widthPixel: Int
-    private let heightPixel: Int
+    public let widthPixel: Double
+    public let heightPixel: Double
 
     public let x: Int
     public let y: Int
@@ -40,8 +40,8 @@ public struct WebMercatorTile: Projection {
         self.z = z
         self.pixelRatio = pixelRatio
         
-        self.widthPixel = widthPoint * pixelRatio
-        self.heightPixel = heightPoint * pixelRatio
+        self.widthPixel = Double(widthPoint * pixelRatio)
+        self.heightPixel = Double(heightPoint * pixelRatio)
         
         self.mapUnitsPrPoint = WebMercatorTile.startResolution * pow(0.5, Double(z));
         self.mapUnitsPrPixel = mapUnitsPrPoint / Double(pixelRatio)
@@ -63,7 +63,7 @@ public struct WebMercatorTile: Projection {
         let mapX = lonRad * WebMercatorTile.radius
 
         let pixelX = (mapX - minX) / mapUnitsPrPixel
-        let pixelY = Double(heightPixel) - 1.0 - ((mapY - minY) / -mapUnitsPrPixel)
+        let pixelY = heightPixel - 1.0 - ((mapY - minY) / -mapUnitsPrPixel)
 
         return coordinate.transform(newX: pixelX, newY: pixelY)
     }
@@ -71,7 +71,7 @@ public struct WebMercatorTile: Projection {
     public func inverse(coordinate: any Coordinate) -> any Coordinate {
         
         let mapX = (coordinate.x * mapUnitsPrPixel) + minX
-        let mapY = ((coordinate.y - Double(heightPixel) + 1.0) * mapUnitsPrPixel) + minY
+        let mapY = ((coordinate.y - heightPixel + 1.0) * mapUnitsPrPixel) + minY
         
         // http://wiki.openstreetmap.org/wiki/Mercator
         let latRad = 2.0 * atan(exp(mapY / 6378137.0)) - .pi / 2.0;

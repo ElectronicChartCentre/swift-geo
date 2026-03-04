@@ -8,8 +8,8 @@ import Foundation
 public struct LLXYProjection: Projection {
     
     private let bbox: BoundingBox
-    private let widthPixel: Double
-    private let heightPixel: Double
+    public let widthPixel: Double
+    public let heightPixel: Double
     
     public init(bbox: BoundingBox, widthPoint: Int, heightPoint: Int, pixelsPrPoint: Int) {
         self.bbox = bbox
