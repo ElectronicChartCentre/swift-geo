@@ -21,11 +21,11 @@ public struct FlipScreenYProjection: Projection {
     
     public func forward(coordinate: any Coordinate) -> any Coordinate {
         let screen = wrappedProjection.forward(coordinate: coordinate)
-        return screen.transform(newX: screen.x, newY: heightPixel - screen.y)
+        return screen.transform(newX: screen.x, newY: heightPixel - 1.0 - screen.y)
     }
     
     public func inverse(coordinate: any Coordinate) -> any Coordinate {
-        let screen = coordinate.transform(newX: coordinate.x, newY: heightPixel - coordinate.y)
+        let screen = coordinate.transform(newX: coordinate.x, newY: heightPixel - 1.0 - coordinate.y)
         return wrappedProjection.inverse(coordinate: screen)
     }
     
