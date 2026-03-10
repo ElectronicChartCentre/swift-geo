@@ -5,7 +5,7 @@
 
 import Foundation
 
-public protocol Geometry {
+public protocol Geometry: Sendable {
     
     func isEmpty() -> Bool
     
@@ -14,7 +14,5 @@ public protocol Geometry {
     func bbox() -> BoundingBox?
     
     func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> Self
-    
-    func refs() -> [any Hashable]
     
 }

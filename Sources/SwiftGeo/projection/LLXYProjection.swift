@@ -29,6 +29,14 @@ public struct LLXYProjection: Projection {
         return coordinate.transform(newX: worldX, newY: worldY)
     }
     
+    public func forward(coordinateSequence: any CoordinateSequence) -> any CoordinateSequence {
+        return coordinateSequence.transform(self.forward)
+    }
+    
+    public func inverse(coordinateSequence: any CoordinateSequence) -> any CoordinateSequence {
+        return coordinateSequence.transform(self.inverse)
+    }
+    
     public func forward(geometry: Geometry) -> Geometry {
         return geometry.transform(forward)
     }

@@ -29,6 +29,14 @@ public struct FlipScreenYProjection: Projection {
         return wrappedProjection.inverse(coordinate: screen)
     }
     
+    public func forward(coordinateSequence: any CoordinateSequence) -> any CoordinateSequence {
+        return coordinateSequence.transform(self.forward)
+    }
+    
+    public func inverse(coordinateSequence: any CoordinateSequence) -> any CoordinateSequence {
+        return coordinateSequence.transform(self.inverse)
+    }
+    
     public func forward(geometry: any Geometry) -> any Geometry {
         return geometry.transform(self.forward)
     }

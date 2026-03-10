@@ -9,7 +9,7 @@ public struct Distance2D {
     
     public func coordinateToLine(c: any Coordinate, line: LinearGeometry) -> Double {
         var distance: Double = .greatestFiniteMagnitude
-        for (i, coordinate) in line.coordinates.enumerated() {
+        for (i, coordinate) in Array(line.coordinates).enumerated() {
             guard let nextCoordinate = line.coordinate(index: i, skip: 1) else {
                 continue
             }

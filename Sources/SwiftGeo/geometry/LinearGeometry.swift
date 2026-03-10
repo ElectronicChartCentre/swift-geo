@@ -7,9 +7,7 @@ import Foundation
 
 public protocol LinearGeometry: Geometry {
     
-    var coordinates: [any Coordinate] { get }
-    
-    var ref: (any Hashable)? { get }
+    var coordinates: any CoordinateSequence { get }
     
     func length() -> Double
     

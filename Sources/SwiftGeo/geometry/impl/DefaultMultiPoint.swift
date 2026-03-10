@@ -7,26 +7,26 @@ import Foundation
 
 public struct DefaultMultiPoint: MultiPoint {
     
-    private let _coordinates: [any Coordinate]
+    public let coordinates: any CoordinateSequence
     
     public init(coordinates: [any Coordinate]) {
-        _coordinates = coordinates
+        self.coordinates = ArrayCoordinateSequence(coordinates)
+    }
+    
+    public init(coordinates: any CoordinateSequence) {
+        self.coordinates = coordinates
     }
     
     public func geometries() -> [Geometry] {
         var geometries: [Geometry] = []
-        for coordinate in _coordinates {
+        for coordinate in coordinates {
             geometries.append(DefaultPoint(coordinate: coordinate))
         }
         return geometries
     }
     
-    public func coordinates() -> [any Coordinate] {
-        return _coordinates
-    }
-    
     public func isEmpty() -> Bool {
-        return _coordinates.isEmpty
+        return coordinates.isEmpty
     }
     
     public func isValid() -> Bool {
@@ -34,19 +34,12 @@ public struct DefaultMultiPoint: MultiPoint {
     }
     
     public func bbox() -> BoundingBox? {
-        return DefaultBoundingBox.create(_coordinates)
+        return DefaultBoundingBox.create(coordinates)
     }
     
     public func transform(_ transform: (any Coordinate) -> any Coordinate) -> DefaultMultiPoint {
-        var newCoordinates: [any Coordinate] = []
-        for coordinate in _coordinates {
-            newCoordinates.append(transform(coordinate))
-        }
+        let newCoordinates = coordinates.transform(transform)
         return DefaultMultiPoint(coordinates: newCoordinates)
-    }
-    
-    public func refs() -> [any Hashable] {
-        return []
     }
     
 }

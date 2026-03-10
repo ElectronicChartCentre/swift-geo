@@ -35,13 +35,4 @@ public struct DefaultPolygon: Polygon {
         return DefaultPolygon(shell: newShell, holes: newHoles)
     }
     
-    public func refs() -> [any Hashable] {
-        var refs: [any Hashable] = []
-        refs.append(contentsOf: shell.refs())
-        for hole in holes {
-            refs.append(contentsOf: hole.refs())
-        }
-        return refs
-    }
-    
 }

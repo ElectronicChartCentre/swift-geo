@@ -5,7 +5,7 @@
 
 import Foundation
 
-public protocol Coordinate: Equatable {
+public protocol Coordinate: Equatable, Sendable {
     
     var x: Double { get }
     

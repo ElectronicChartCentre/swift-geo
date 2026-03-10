@@ -31,20 +31,24 @@ public struct DefaultGeometryCreator: GeometryCreator {
         return DefaultMultiPoint(coordinates: coords)
     }
     
-    public func createLineString(coords: [any Coordinate]) -> any LineString {
-        return DefaultLineString(coordinates: coords, ref: nil)
+    public func createMultiPoint(coords: any CoordinateSequence) -> any Geometry {
+        return DefaultMultiPoint(coordinates: coords)
     }
     
-    public func createLineString(coords: [any Coordinate], ref: (any Hashable)?) -> any LineString {
-        return DefaultLineString(coordinates: coords, ref: ref)
+    public func createLineString(coords: [any Coordinate]) -> any LineString {
+        return DefaultLineString(coordinates: coords)
+    }
+    
+    public func createLineString(coords: any CoordinateSequence) -> any LineString {
+        return DefaultLineString(coordinates: coords)
     }
     
     public func createLinearRing(coords: [any Coordinate]) -> any LinearRing {
-        return DefaultLinearRing(coordinates: coords, ref: nil)
+        return DefaultLinearRing(coordinates: coords)
     }
     
-    public func createLinearRing(coords: [any Coordinate], ref: (any Hashable)?) -> any LinearRing {
-        return DefaultLinearRing(coordinates: coords, ref: ref)
+    public func createLinearRing(coords: any CoordinateSequence) -> any LinearRing {
+        return DefaultLinearRing(coordinates: coords)
     }
     
     public func createPolygon(shell: any LinearRing, holes: [any LinearRing]) -> any Polygon {

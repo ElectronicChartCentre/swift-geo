@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct Angle {
+public struct Angle: Sendable {
     
     private static let twopi = .pi * 2.0
     private static let halfpi = .pi / 2.0

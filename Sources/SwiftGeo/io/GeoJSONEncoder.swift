@@ -49,15 +49,15 @@ public struct GeoJSONEncoder {
             return ["type": "LineString", "coordinates": toArray(linearRing.coordinates)]
         }
         if let multiPoint = geometry as? MultiPoint {
-            return ["type": "MultiPoint", "coordinates": toArray(multiPoint.coordinates())]
+            return ["type": "MultiPoint", "coordinates": toArray(multiPoint.coordinates)]
         }
         if let polygon = geometry as? Polygon {
-            var coordss = [[any Coordinate]]()
-            coordss.append(polygon.shell.coordinates)
+            var rings = [any CoordinateSequence]()
+            rings.append(polygon.shell.coordinates)
             for hole in polygon.holes {
-                coordss.append(hole.coordinates)
+                rings.append(hole.coordinates)
             }
-            return ["type": "Polygon", "coordinates": toArray(coordss)]
+            return ["type": "Polygon", "coordinates": toArray(rings)]
         }
         if let multiGeometry = geometry as? MultiGeometry {
             var geometries = [[String: Any]]()
@@ -89,6 +89,14 @@ public struct GeoJSONEncoder {
         return coords
     }
     
+    private static func toArray(_ cs: any CoordinateSequence) -> [[Double]] {
+        var coords = [[Double]]()
+        for coordinate in cs {
+            coords.append(toArray(coordinate))
+        }
+        return coords
+    }
+    
     private static func toArray(_ coordinatess: [[any Coordinate]]) -> [[[Double]]] {
         var coordss = [[[Double]]]()
         for coordinates in coordinatess {
@@ -97,5 +105,12 @@ public struct GeoJSONEncoder {
         return coordss
     }
 
-    
+    private static func toArray(_ coordinatess: [any CoordinateSequence]) -> [[[Double]]] {
+        var coordss = [[[Double]]]()
+        for coordinates in coordinatess {
+            coordss.append(toArray(coordinates))
+        }
+        return coordss
+    }
+
 }

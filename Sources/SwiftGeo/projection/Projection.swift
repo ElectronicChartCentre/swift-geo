@@ -26,11 +26,21 @@ public protocol Projection {
     /**
      * project from world x y to screen x y
      */
-    func forward(geometry: Geometry) -> Geometry
+    func forward(coordinateSequence: any CoordinateSequence) -> any CoordinateSequence
     
     /**
      * project from screen x y to world x y
      */
-    func inverse(geometry: Geometry) -> Geometry
+    func inverse(coordinateSequence: any CoordinateSequence) -> any CoordinateSequence
+
+    /**
+     * project from world x y to screen x y
+     */
+    func forward(geometry: any Geometry) -> any Geometry
+    
+    /**
+     * project from screen x y to world x y
+     */
+    func inverse(geometry: any Geometry) -> any Geometry
     
 }

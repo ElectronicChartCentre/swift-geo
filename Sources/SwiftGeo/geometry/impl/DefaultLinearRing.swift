@@ -7,8 +7,15 @@ import Foundation
 
 public struct DefaultLinearRing: LinearRing {
     
-    public let coordinates: [any Coordinate]
-    public let ref: (any Hashable)?
+    public let coordinates: any CoordinateSequence
+    
+    public init(coordinates: [any Coordinate]) {
+        self.coordinates = ArrayCoordinateSequence(coordinates)
+    }
+    
+    public init(coordinates: any CoordinateSequence) {
+        self.coordinates = coordinates
+    }
     
     public func isEmpty() -> Bool {
         return coordinates.isEmpty
@@ -18,7 +25,7 @@ public struct DefaultLinearRing: LinearRing {
         if coordinates.count < 3 {
             return false
         }
-        return coordinates.first!.isEqual(to: coordinates.last!)
+        return coordinates[0].isEqual(to: coordinates[coordinates.count - 1])
     }
     
     public func bbox() -> BoundingBox? {
@@ -26,11 +33,8 @@ public struct DefaultLinearRing: LinearRing {
     }
     
     public func transform(_ transform: (any Coordinate) -> (any Coordinate)) -> DefaultLinearRing {
-        var newCoords: [any Coordinate] = []
-        for coord in coordinates {
-            newCoords.append(transform(coord))
-        }
-        return DefaultLinearRing(coordinates: newCoords, ref: ref)
+        let cs = coordinates.transform(transform)
+        return DefaultLinearRing(coordinates: cs)
     }
     
     public func length() -> Double {
@@ -75,14 +79,7 @@ public struct DefaultLinearRing: LinearRing {
             newCoordinates.append(coordinate)
             prevCoordinate = coordinate
         }
-        return DefaultLinearRing(coordinates: newCoordinates, ref: ref)
-    }
-    
-    public func refs() -> [any Hashable] {
-        if let ref = ref {
-            return [ref]
-        }
-        return []
+        return DefaultLinearRing(coordinates: newCoordinates)
     }
 
 }
