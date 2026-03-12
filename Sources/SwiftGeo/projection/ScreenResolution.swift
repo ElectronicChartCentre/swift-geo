@@ -19,4 +19,8 @@ public struct ScreenResolution {
         return pixelsPrMeter / 1000.0 * mm
     }
     
+    public func mm(pixels: Double) -> Double {
+        return (pixels / pixelsPrMeter) * 1000.0
+    }
+    
 }
