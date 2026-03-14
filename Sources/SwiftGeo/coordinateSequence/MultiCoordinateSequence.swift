@@ -14,16 +14,12 @@ public struct MultiCoordinateSequence: CoordinateSequence {
     
     public init(_ css: [any CoordinateSequence]) {
         self.css = css
-        
-        // do something smarter?
+
         var allCoordinates: [any Coordinate] = []
         for cs in css {
-            for c in cs {
-                allCoordinates.append(c)
-            }
+            allCoordinates.append(contentsOf: cs)
         }
         self.allCoordinates = allCoordinates
-
         self.startIndex = 0
         self.endIndex = allCoordinates.count
     }
