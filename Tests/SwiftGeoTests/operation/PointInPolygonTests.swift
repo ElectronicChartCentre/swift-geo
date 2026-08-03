@@ -22,7 +22,7 @@ struct PointInPolygonTests {
         let polygon = c.createPolygon(shell: ring, holes: [])
         
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: 5, y: 5),
+            coordinate: c.createCoordinate2D(x: 5, y: 5),
             polygon: polygon
         ) == true)
     }
@@ -40,7 +40,7 @@ struct PointInPolygonTests {
         let polygon = c.createPolygon(shell: ring, holes: [])
         
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: -1, y: -1),
+            coordinate: c.createCoordinate2D(x: -1, y: -1),
             polygon: polygon
         ) == false)
     }
@@ -58,7 +58,7 @@ struct PointInPolygonTests {
         let polygon = c.createPolygon(shell: ring, holes: [])
         
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: 5, y: 0),
+            coordinate: c.createCoordinate2D(x: 5, y: 0),
             polygon: polygon
         ) == true)
     }
@@ -86,13 +86,13 @@ struct PointInPolygonTests {
         
         // Inside the hole
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: 10, y: 10),
+            coordinate: c.createCoordinate2D(x: 10, y: 10),
             polygon: polygon
         ) == false)
         
         // Outside the hole but inside the shell
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: 2, y: 2),
+            coordinate: c.createCoordinate2D(x: 2, y: 2),
             polygon: polygon
         ) == true)
     }
@@ -109,12 +109,12 @@ struct PointInPolygonTests {
         let polygon = c.createPolygon(shell: ring, holes: [])
         
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: 5, y: 3),
+            coordinate: c.createCoordinate2D(x: 5, y: 3),
             polygon: polygon
         ) == true)
         
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: 5, y: 11),
+            coordinate: c.createCoordinate2D(x: 5, y: 11),
             polygon: polygon
         ) == false)
     }
@@ -126,7 +126,7 @@ struct PointInPolygonTests {
         let emptyPolygon = c.createPolygon(shell: c.createLinearRing(coords: []), holes: [])
         
         #expect(PointInPolygon.isPointInPolygon(
-            point: c.createCoordinate2D(x: 0, y: 0),
+            coordinate: c.createCoordinate2D(x: 0, y: 0),
             polygon: emptyPolygon
         ) == false)
     }

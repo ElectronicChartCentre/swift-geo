@@ -7,23 +7,23 @@ import Foundation
 
 public struct PointInPolygon {
     
-    public static func isPointInPolygon(point: any Coordinate, polygon: any Polygon) -> Bool {
+    public static func isPointInPolygon(coordinate: any Coordinate, polygon: any Polygon) -> Bool {
         guard !polygon.isEmpty() else {
             return false
         }
         
         if let bbox = polygon.bbox() {
-            if !bbox.intersects(point) {
+            if !bbox.intersects(coordinate) {
                 return false
             }
         }
         
-        if !isPointInRing(point: point, ring: polygon.shell) {
+        if !isPointInRing(coordinate: coordinate, ring: polygon.shell) {
             return false
         }
         
         for hole in polygon.holes {
-            if isPointInRing(point: point, ring: hole) {
+            if isPointInRing(coordinate: coordinate, ring: hole) {
                 return false
             }
         }
@@ -32,10 +32,10 @@ public struct PointInPolygon {
     }
     
     public static func isPointInPolygon(point: any Point, polygon: any Polygon) -> Bool {
-        return isPointInPolygon(point: point.coordinate, polygon: polygon)
+        return isPointInPolygon(coordinate: point.coordinate, polygon: polygon)
     }
     
-    private static func isPointInRing(point: any Coordinate, ring: LinearRing) -> Bool {
+    private static func isPointInRing(coordinate: any Coordinate, ring: LinearRing) -> Bool {
         // Ray casting algorithm: cast a horizontal ray from the point to the right
         // and count how many edges it crosses. Odd count = inside, even = outside.
         // https://en.wikipedia.org/wiki/Point_in_polygon#Ray_casting_algorithm
@@ -46,8 +46,8 @@ public struct PointInPolygon {
         }
         
         var inside = false
-        let x = point.x
-        let y = point.y
+        let x = coordinate.x
+        let y = coordinate.y
         
         var j = coords.count - 2
         for i in 0..<coords.count - 1 {
