@@ -12,13 +12,16 @@ let package = Package(
             targets: ["SwiftGeo"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-testing.git", from: "0.11.0"),
+    ],
     targets: [
         .target(
             name: "SwiftGeo"
         ),
         .testTarget(
             name: "SwiftGeoTests",
-            dependencies: ["SwiftGeo"]
+            dependencies: ["SwiftGeo", .product(name: "Testing", package: "swift-testing")]
         ),
     ]
 )
